@@ -25,13 +25,13 @@ def test_local():
 def test_qsub():
     alla, allb, power = _get_testargs()
 
-    from mybatch import qsub
-    qsub('walltime=00:05:00,mem=4gb', 'mymodule', 'myfunction', alla, power=power)
-    qsub('walltime=00:05:00,mem=4gb', 'mymodule', 'computeproduct', alla, allb)
+    import mybatch
+    mybatch.qsub('walltime=00:05:00,mem=4gb', 'mymodule', 'myfunction', alla, power=power)
+    mybatch.qsub('walltime=00:05:00,mem=4gb', 'mymodule', 'computeproduct', alla, allb)
 
 def test_sbatch():
     alla, allb, power = _get_testargs()
 
-    from mybatch import sbatch
-    sbatch('walltime=00:05:00,mem=4gb', 'mymodule', 'myfunction', alla, power=power)
-    sbatch('walltime=00:05:00,mem=4gb', 'mymodule', 'computeproduct', alla, allb)
+    import mybatch
+    mybatch.sbatch('--mem=4gb --time=00:01:00', 'mymodule', 'myfunction', alla, power=power)
+    mybatch.sbatch('--mem=4gb --time=00:01:00', 'mymodule', 'computeproduct', alla, allb)

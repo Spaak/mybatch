@@ -25,6 +25,7 @@
 # into text, so it's recommended to only use numbers (for kwargs, strings will work).
 
 import os
+import random
 from os.path import expanduser
 import numpy as np
 from datetime import datetime
@@ -44,7 +45,8 @@ def runbatch(reqstring, module, fun, *args, logdir=None, backend=None, **kwargs)
 
     pythoncmd = 'python'
 
-    batchid = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+    # add a random integer to the end of job ID to prevent duplicate folder time stamps
+    batchid = datetime.now().strftime('%Y-%m-%dT%H:%M:%S') + '_{:03d}'.format(random.randint(0, 999))
     if logdir is None:
         logdir = expanduser('~/.pythonjobs/')
     batchdir = logdir + batchid
@@ -66,15 +68,16 @@ def runbatch(reqstring, module, fun, *args, logdir=None, backend=None, **kwargs)
             # note the -V which ensures the child job inherits the proper environment
             batchcmd = 'qsub -o /dev/null -e /dev/null -V -l {} -N j{}_{}'.format(
                 reqstring, thisargs[0], fun)
+            fullcmd = 'echo \'{} >{}.out 2>{}.err\' | {}'.format(
+                pythoncmd, logfile, logfile, batchcmd)
         elif backend == 'slurm':
             # note --export=ALL to inherit the environment (should be default, but specify still)
             batchcmd = 'sbatch --export=ALL {} -J j{}_{}'.format(
                 reqstring, thisargs[0], fun)
+            fullcmd = 'echo \'#!/bin/bash\n{} >{}.out 2>{}.err\n\' | {}'.format(
+                pythoncmd, logfile, logfile, batchcmd)
         else:
             raise ValueError('unknown backend: ' + backend)
 
-        fullcmd = 'echo \'{} >{}.out 2>{}.err\' | {}'.format(
-            pythoncmd, logfile, logfile, batchcmd)
-
         os.system(fullcmd)
-        # print(fullcmd)
+        #print(fullcmd)
