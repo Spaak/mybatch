@@ -53,7 +53,7 @@ def runbatch(reqstring, module, fun, *args, logdir=None, backend=None, **kwargs)
     if logdir is None:
         logdir = expanduser('~/.pythonjobs/')
     batchdir = logdir + batchid
-    os.mkdir(batchdir)
+    os.makedirs(batchdir)
 
     for k, thisargs in enumerate(zip(*args)):
         argslist = ','.join([str(x) for x in thisargs])
