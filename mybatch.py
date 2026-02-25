@@ -31,7 +31,6 @@
 import os
 import random
 from os.path import expanduser
-import numpy as np
 from datetime import datetime
 
 def qsub(*args, **kwargs):
