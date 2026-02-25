@@ -1,4 +1,4 @@
-# myqsub
+# mybatch
 A simple Python script for easily submitting jobs to an HPC cluster
 
 Copyright 2019-2025 Eelke Spaak, Donders Institute, Nijmegen
