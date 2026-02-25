@@ -21,7 +21,7 @@ and multiple kwargs as well (kwargs are passed as-is to each job).
 will launch computeproduct(1,4), computeproduct(2,5), and computeproduct(3,6).
 
 You can specify a logdir for stderr and stdout logs of the jobs, by default this
-is <userhome>/.pythonjobs/<timestamp>.
+is `<userhome>/.pythonjobs/<timestamp>`.
 
 Note mybatch.runbatch does not capture job output. It is recommended to have all job output
 go via disk. The same goes for elaborate job input. mybatch.runbatch will print job argumenst
