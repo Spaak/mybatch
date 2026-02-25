@@ -6,7 +6,7 @@ Licensed under GPLv3
 
 Use as:
 
-`mybatch.runbatch('walltime=01:00:00,mem=4gb', 'mymodule', 'myfunction', range(10), power=3)`
+`mybatch.runbatch('--time=00:10:00 --mem=4gb', 'mymodule', 'myfunction', range(10), power=3)`
 
 (Specify backend with kwarg backend='slurm' (default) or backend='torque'.)
 
@@ -16,7 +16,7 @@ and multiple kwargs as well (kwargs are passed as-is to each job).
 
 2nd example to understand multiple argument lists:
 
-`mybatch.runbatch('walltime=00:20:00,mem=4gb', 'mymodule', 'computeproduct', [1,2,3], [4,5,6])`
+`mybatch.runbatch('--time=00:10:00 --mem=4gb', 'mymodule', 'computeproduct', [1,2,3], [4,5,6])`
 
 will launch computeproduct(1,4), computeproduct(2,5), and computeproduct(3,6).
 
@@ -26,3 +26,7 @@ is <userhome>/.pythonjobs/<timestamp>.
 Note mybatch.runbatch does not capture job output. It is recommended to have all job output
 go via disk. The same goes for elaborate job input. mybatch.runbatch will print job argumenst
 into text, so it's recommended to only use numbers (for kwargs, strings will work).
+
+Note furthermore that the requirements string (first argument) has to be specified
+in a scheduler-dependent manner. This means '--time=... --mem=...' for Slurm, and
+'walltime=...,mem=...' for Torque.
